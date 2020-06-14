@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Navbar, NavbarBrand } from 'reactstrap';
-import Menu from './components/ListaProductosComponent';
-import ListaProductos from './components/ListaProductosComponent';
+import Main from './components/contenedor/MainComponent';
 
 
 
-function App() {
-    return (
-        <div className="App">
-            <Navbar dark color="primary">
-                <div className="container">
-                    <NavbarBrand href="/">Mi Ecommerce</NavbarBrand>
-                </div>
-            </Navbar>
-            <ListaProductos />
-        </div>
-    );
+class App extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <Main />
+            </div>
+        );
+    }
+
 }
 
 export default App;
