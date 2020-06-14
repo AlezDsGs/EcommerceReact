@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
 
 import ListaProductos from '../presentacion/ListaProductosComponent';
-import DetalleProducto from '../presentacion/DetalleProductoConponent';
+import DetalleProducto from '../presentacion/DetalleProductoComponent';
 import { PRODUCTOS } from '../../frombackend/productos';
 
 
