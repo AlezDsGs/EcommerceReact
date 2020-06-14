@@ -2,6 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Navbar, NavbarBrand } from 'reactstrap';
+import Menu from './components/ListaProductosComponent';
+import ListaProductos from './components/ListaProductosComponent';
+
 
 
 function App() {
@@ -12,6 +15,7 @@ function App() {
                     <NavbarBrand href="/">Mi Ecommerce</NavbarBrand>
                 </div>
             </Navbar>
+            <ListaProductos />
         </div>
     );
 }
