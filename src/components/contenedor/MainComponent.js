@@ -4,6 +4,9 @@ import DetalleProducto from '../presentacion/DetalleProductoComponent';
 import { PRODUCTOS } from '../../frombackend/productos';
 import Header from './HeaderComponent';
 import Footer from '../presentacion/FooterComponent';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Home from '../presentacion/HomeComponent';
+
 
 
 class Main extends Component {
@@ -21,11 +24,22 @@ class Main extends Component {
     }
 
     render() {
+        const HomePage = () => {
+            return (
+                <Home />
+            );
+        }
+
         return (
+
+
             <div>
                 <Header />
-                <ListaProductos productos={this.state.productos} onClick={(productoId) => this.onProductoSelect(productoId)} />
-                <DetalleProducto producto={this.state.productos.filter((prod) => prod.id === this.state.selectedProducto)[0]} />
+                <Switch>
+                    <Route path='/home' component={HomePage} />
+                    <Route exact path='/listaproductos' component={() => <ListaProductos productos={this.state.productos} />} />
+                    <Redirect to="/home" />
+                </Switch>
                 <Footer />
             </div>
         );
