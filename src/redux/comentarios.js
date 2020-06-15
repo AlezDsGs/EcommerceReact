@@ -1,14 +1,17 @@
-import { COMENTARIOS } from '../frombackend/comentarios';
 import * as ActionTypes from './ActionTypes';
 
-export const Comentarios = (state = COMENTARIOS, action) => {
+export const Comentarios = (state = { errMess: null, comentarios: [] }, action) => {
     switch (action.type) {
-        case ActionTypes.ADD_COMMENT:
-            var comment = action.payload;
-            comment.id = state.length;
-            comment.date = new Date().toISOString();
-            console.log("Comment: ", comment);
-            return state.concat(comment);
+        case ActionTypes.ADD_COMENTARIOS:
+            return { ...state, errMess: null, comentarios: action.payload };
+        case ActionTypes.COMENTARIOS_FAILED:
+            return { ...state, errMess: action.payload };
+
+        //case ActionTypes.ADD_COMENTARIO:
+        //    var comentario = action.payload;
+        //    comentario.id = state.comments.length;
+        //    comentario.date = new Date().toISOString();
+        //    return { ...state, comentarios: state.comentarios.concat(comentario) };
 
         default:
             return state;

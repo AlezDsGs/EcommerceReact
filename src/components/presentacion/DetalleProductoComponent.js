@@ -1,13 +1,15 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../../frombackend/baseUrl';
+
 
 
 
 function renderProducto(producto) {
     return (
         <Card>
-            <CardImg top src={producto.image} alt={producto.name} />
+            <CardImg top src={baseUrl + producto.image} alt={producto.name} />
             <CardBody>
                 <CardTitle>{producto.name}</CardTitle>
                 <CardText>{producto.description}</CardText>

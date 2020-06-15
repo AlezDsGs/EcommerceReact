@@ -10,7 +10,7 @@ import { PROMOCIONES } from '../../frombackend/promociones';
 
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { /*addComment,*/ fetchProductos } from '../../redux/ActionCreators';
+import { /*addComment,*/ fetchProductos, fetchComentarios, fetchPromociones } from '../../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -21,8 +21,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispathToProps = (dispatch) => ({
-    fetchProductos: () => { dispatch(fetchProductos()) }
-
+    fetchProductos: () => { dispatch(fetchProductos()) },
+    fetchComentarios: () => dispatch(fetchComentarios()),
+    fetchPromociones: () => dispatch(fetchPromociones())
+    //addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    //resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
 });
 
 class Main extends Component {
@@ -35,6 +38,8 @@ class Main extends Component {
 
     componentDidMount() {
         this.props.fetchProductos();
+        this.props.fetchComentarios();
+        this.props.fetchPromociones();
     }
 
     render() {
@@ -45,10 +50,12 @@ class Main extends Component {
             return (
                 <DetalleProducto
                     producto={this.props.productos.productos.filter((prod) => prod.id === parseInt(match.params.prodId, 10))[0]}
-                    comentarios={this.props.comentarios.filter((comment) => comment.dishId === parseInt(match.params.prodId, 10))}
                     isLoading={this.props.productos.isLoading}
                     errMess={this.props.productos.errMess}
-                //addComment={this.props.addComment}
+
+                    comentarios={this.props.comentarios.comentarios.filter((comment) => comment.dishId === parseInt(match.params.prodId, 10))}
+                    comentariosErrMess={this.props.comentarios.errMess}
+                    //addComment={this.props.addComment}
                 />
             );
         };
@@ -57,9 +64,12 @@ class Main extends Component {
             return (
                 <Home
                     producto={this.props.productos.productos.filter((prod) => prod.featured)[0]}
-                    promocion={this.props.promociones.filter((promo) => promo.featured)[0]}
                     productosLoading={this.props.productos.isLoading}
                     productosErrMess={this.props.productos.errMess}
+
+                    promocion={this.props.promociones.promociones.filter((promo) => promo.featured)[0]}
+                    promocionLoading={this.props.promociones.isLoading}
+                    promocionErrMess={this.props.promociones.errMess}
                 />
             );
         }

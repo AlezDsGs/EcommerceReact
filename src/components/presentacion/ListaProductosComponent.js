@@ -6,6 +6,8 @@ import {
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 
+import { baseUrl } from '../../frombackend/baseUrl';
+
 function RenderProductoItem({ producto }) {
     return (
         //<Card onClick={() => onClick(producto.id)}>
@@ -18,7 +20,7 @@ function RenderProductoItem({ producto }) {
         //</Card>   
         <Card>
             <Link to={`/ListaProductos/${producto.id}`} >
-                <CardImg width="100%" src={producto.image} alt={producto.name} />
+                <CardImg width="100%" src={baseUrl + producto.image} alt={producto.name} />
                 <CardImgOverlay>
                     <CardTitle>{producto.name}</CardTitle>
                 </CardImgOverlay>
@@ -34,7 +36,7 @@ const ListaDeProductos = (props) => {
     const listaDeProductos = props.productos.productos.map((producto, index) => {
         return (
             <div key={producto.id} className="col-5 col-sm-4 mt-4" >
-                <RenderProductoItem producto={producto}/>
+                <RenderProductoItem producto={producto} />
             </div>
         );
     });
@@ -61,13 +63,13 @@ const ListaDeProductos = (props) => {
     }
     else
 
-    return (
-        <div className="container">
-            <div className="row justify-content-center">
-                {listaDeProductos}
+        return (
+            <div className="container">
+                <div className="row justify-content-center">
+                    {listaDeProductos}
+                </div>
             </div>
-        </div>
-    );
+        );
 }
 
 
