@@ -4,46 +4,43 @@ import DetalleProducto from '../presentacion/DetalleProductoComponent';
 import { PRODUCTOS } from '../../frombackend/productos';
 import Header from './HeaderComponent';
 import Footer from '../presentacion/FooterComponent';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from '../presentacion/HomeComponent';
 import { COMENTARIOS } from '../../frombackend/comentarios';
 import { PROMOCIONES } from '../../frombackend/promociones';
 
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 
+const mapStateToProps = state => {
+    return {
+        productos: state.productos,
+        comentarios: state.comentarios,
+        promociones: state.promociones
+    }
+}
 
 class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            productos: PRODUCTOS,
-            comentarios: COMENTARIOS,
-            promociones: PROMOCIONES,
-            selectedProducto: null,
-        };
     }
-
-    onProductoSelect(productoId) {
-        this.setState({ selectedProducto: productoId });
-    }
-
-
-
 
     render() {
+
+
         const ProductoWithId = ({ match }) => {
             return (
-                <DetalleProducto producto={this.state.productos.filter((prod) => prod.id === parseInt(match.params.prodId, 10))[0]}
-                    comentarios={this.state.comentarios.filter((comment) => comment.dishId === parseInt(match.params.prodId, 10))} />
+                <DetalleProducto producto={this.props.productos.filter((prod) => prod.id === parseInt(match.params.prodId, 10))[0]}
+                    comentarios={this.props.comentarios.filter((comment) => comment.dishId === parseInt(match.params.prodId, 10))} />
             );
         };
 
         const HomePage = () => {
             return (
                 <Home
-                    producto={this.state.productos.filter((prod) => prod.featured)[0]}
-                    promocion={this.state.promociones.filter((promo) => promo.featured)[0]}
+                    producto={this.props.productos.filter((prod) => prod.featured)[0]}
+                    promocion={this.props.promociones.filter((promo) => promo.featured)[0]}
                 />
             );
         }
@@ -55,7 +52,7 @@ class Main extends Component {
                 <Header />
                 <Switch>
                     <Route path='/home' component={HomePage} />
-                    <Route exact path='/listaproductos' component={() => <ListaProductos productos={this.state.productos} />} />
+                    <Route exact path='/listaproductos' component={() => <ListaProductos productos={this.props.productos} />} />
                     <Route path='/listaproductos/:prodId' component={ProductoWithId} />
                     <Redirect to="/home" />
                 </Switch>
@@ -65,4 +62,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
