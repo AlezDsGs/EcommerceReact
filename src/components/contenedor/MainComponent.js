@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
-
 import ListaProductos from '../presentacion/ListaProductosComponent';
 import DetalleProducto from '../presentacion/DetalleProductoComponent';
 import { PRODUCTOS } from '../../frombackend/productos';
+import Header from './HeaderComponent';
+import Footer from '../presentacion/FooterComponent';
 
 
 class Main extends Component {
@@ -23,13 +23,10 @@ class Main extends Component {
     render() {
         return (
             <div>
-                <Navbar dark color="primary">
-                    <div className="container">
-                        <NavbarBrand href="/">Primer Ecommerce</NavbarBrand>
-                    </div>
-                </Navbar>
+                <Header />
                 <ListaProductos productos={this.state.productos} onClick={(productoId) => this.onProductoSelect(productoId)} />
                 <DetalleProducto producto={this.state.productos.filter((prod) => prod.id === this.state.selectedProducto)[0]} />
+                <Footer />
             </div>
         );
     }
