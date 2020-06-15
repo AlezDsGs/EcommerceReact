@@ -50,7 +50,7 @@ const DetalleProducto = (props) => {
                     {renderProducto(props.producto)}
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    {renderComentarios(props.producto.comments)}
+                    {renderComentarios(props.comentarios)}
                 </div>
             </div>
         );
