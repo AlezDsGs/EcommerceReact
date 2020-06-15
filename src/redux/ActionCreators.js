@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-import { PRODUCTOS } from '../frombackend/productos';
 import { baseUrl } from '../frombackend/baseUrl';
 
 

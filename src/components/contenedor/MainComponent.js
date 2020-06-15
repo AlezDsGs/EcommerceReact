@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import ListaProductos from '../presentacion/ListaProductosComponent';
 import DetalleProducto from '../presentacion/DetalleProductoComponent';
-import { PRODUCTOS } from '../../frombackend/productos';
 import Header from './HeaderComponent';
 import Footer from '../presentacion/FooterComponent';
 import Home from '../presentacion/HomeComponent';
-import { COMENTARIOS } from '../../frombackend/comentarios';
-import { PROMOCIONES } from '../../frombackend/promociones';
 
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
