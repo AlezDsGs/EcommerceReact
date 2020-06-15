@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Loading } from './LoadingComponent';
 
 
 
@@ -43,7 +44,25 @@ function renderComentarios(comentarios) {
 }
 
 const DetalleProducto = (props) => {
-    if (props.producto != null)
+
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    } else if (props.producto != null)
         return (
             <div className="row">
                 <div className="col-12 col-md-5 m-1">

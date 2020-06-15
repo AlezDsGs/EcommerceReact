@@ -10,7 +10,7 @@ import { PROMOCIONES } from '../../frombackend/promociones';
 
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-
+import { /*addComment,*/ fetchProductos } from '../../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -20,27 +20,46 @@ const mapStateToProps = state => {
     }
 }
 
+const mapDispathToProps = (dispatch) => ({
+    fetchProductos: () => { dispatch(fetchProductos()) }
+
+});
+
 class Main extends Component {
 
     constructor(props) {
         super(props);
+
+    }
+
+
+    componentDidMount() {
+        this.props.fetchProductos();
     }
 
     render() {
 
-
         const ProductoWithId = ({ match }) => {
+
+            console.log(this.props);
             return (
-                <DetalleProducto producto={this.props.productos.filter((prod) => prod.id === parseInt(match.params.prodId, 10))[0]}
-                    comentarios={this.props.comentarios.filter((comment) => comment.dishId === parseInt(match.params.prodId, 10))} />
+                <DetalleProducto
+                    producto={this.props.productos.productos.filter((prod) => prod.id === parseInt(match.params.prodId, 10))[0]}
+                    comentarios={this.props.comentarios.filter((comment) => comment.dishId === parseInt(match.params.prodId, 10))}
+                    isLoading={this.props.productos.isLoading}
+                    errMess={this.props.productos.errMess}
+                //addComment={this.props.addComment}
+                />
             );
         };
 
         const HomePage = () => {
             return (
                 <Home
-                    producto={this.props.productos.filter((prod) => prod.featured)[0]}
+                    producto={this.props.productos.productos.filter((prod) => prod.featured)[0]}
                     promocion={this.props.promociones.filter((promo) => promo.featured)[0]}
+                    productosLoading={this.props.productos.isLoading}
+                    productosErrMess={this.props.productos.errMess}
                 />
             );
         }
@@ -62,4 +81,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispathToProps)(Main));
