@@ -20,9 +20,9 @@ function RenderProductoItem({ producto }) {
         //</Card>   
         <Card>
             <Link to={`/ListaProductos/${producto.id}`} >
-                <CardImg width="100%" src={baseUrl + producto.image} alt={producto.name} />
+                <CardImg width="100%" src={baseUrl + producto.imagen} alt={producto.nombre} />
                 <CardImgOverlay>
-                    <CardTitle>{producto.name}</CardTitle>
+                    <CardTitle>{producto.nombre}</CardTitle>
                 </CardImgOverlay>
             </Link>
         </Card>
@@ -55,7 +55,7 @@ const ListaDeProductos = (props) => {
             <div className="container">
                 <div className="row">
                     <div className="col-12">
-                        <h4>{props.dishes.errMess}</h4>
+                        <h4>{props.productos.errMess}</h4>
                     </div>
                 </div>
             </div>

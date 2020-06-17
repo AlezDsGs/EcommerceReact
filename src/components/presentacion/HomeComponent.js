@@ -8,6 +8,7 @@ import { baseUrl } from '../../frombackend/baseUrl';
 
 
 function RenderCard({ item, isLoading, errMess }) {
+    console.log(item);
     if (isLoading) {
         return (
             <Loading />
@@ -18,17 +19,20 @@ function RenderCard({ item, isLoading, errMess }) {
             <h4>{errMess}</h4>
         );
     }
-    else 
-    return (
-        <Card>
-            <CardImg src={baseUrl + item.image} alt={item.name} />
-            <CardBody>
-                <CardTitle>{item.name}</CardTitle>
-                {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
-                <CardText>{item.description}</CardText>
-            </CardBody>
-        </Card>
-    );
+    else if (item == undefined) {
+        return (<div></div>);
+
+    } else
+        return (
+            <Card>
+                <CardImg src={baseUrl + item.imagen} alt={item.nombre} />
+                <CardBody>
+                    <CardTitle>{item.nombre}</CardTitle>
+                    {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
+                    <CardText>{item.descripcion}</CardText>
+                </CardBody>
+            </Card>
+        );
 
 }
 
@@ -37,7 +41,7 @@ function Home(props) {
         <div className="container">
             <div className="row align-items-start">
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.producto} isLoading={props.productosLoading} errMess={props.productosErrMess}/>
+                    <RenderCard item={props.producto} isLoading={props.productosLoading} errMess={props.productosErrMess} />
                 </div>
                 <div className="col-12 col-md m-1">
                     <RenderCard item={props.promocion} isLoading={props.promocionLoading} errMess={props.promocionErrMess} />

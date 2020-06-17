@@ -50,9 +50,9 @@ class Main extends Component {
                     isLoading={this.props.productos.isLoading}
                     errMess={this.props.productos.errMess}
 
-                    comentarios={this.props.comentarios.comentarios.filter((comment) => comment.dishId === parseInt(match.params.prodId, 10))}
+                    comentarios={this.props.comentarios.comentarios.filter((comment) => comment.productoId === parseInt(match.params.prodId, 10))}
                     comentariosErrMess={this.props.comentarios.errMess}
-                    //addComment={this.props.addComment}
+                //addComment={this.props.addComment}
                 />
             );
         };
@@ -60,11 +60,11 @@ class Main extends Component {
         const HomePage = () => {
             return (
                 <Home
-                    producto={this.props.productos.productos.filter((prod) => prod.featured)[0]}
+                    producto={this.props.productos.productos.filter((prod) => !prod.destacado)[0]}
                     productosLoading={this.props.productos.isLoading}
                     productosErrMess={this.props.productos.errMess}
 
-                    promocion={this.props.promociones.promociones.filter((promo) => promo.featured)[0]}
+                    promocion={this.props.promociones.promociones.filter((promo) => promo.destacado)[0]}
                     promocionLoading={this.props.promociones.isLoading}
                     promocionErrMess={this.props.promociones.errMess}
                 />

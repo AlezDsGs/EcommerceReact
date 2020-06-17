@@ -9,10 +9,10 @@ import { baseUrl } from '../../frombackend/baseUrl';
 function renderProducto(producto) {
     return (
         <Card>
-            <CardImg top src={baseUrl + producto.image} alt={producto.name} />
+            <CardImg top src={baseUrl + producto.imagen} alt={producto.nombre} />
             <CardBody>
-                <CardTitle>{producto.name}</CardTitle>
-                <CardText>{producto.description}</CardText>
+                <CardTitle>{producto.nombre}</CardTitle>
+                <CardText>{producto.descipcion}</CardText>
             </CardBody>
         </Card>
     );
@@ -21,14 +21,14 @@ function renderProducto(producto) {
 function renderComentarios(comentarios) {
     const listaDeComentarios = comentarios.map((comentario) => {
 
-        comentario.date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comentario.date)));
+        comentario.date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comentario.fecha)));
         return (
             <li key={comentario.id}>
 
-                <h6> {comentario.comment} </h6>
-                <h6>{comentario.author}</h6>
-                <h6>{comentario.rating}</h6>
-                <h6>{comentario.date}</h6>
+                <h6> {comentario.textoComentario} </h6>
+                <h6>{comentario.autor}</h6>
+                <h6>{comentario.puntaje}</h6>
+                <h6>{comentario.fecha}</h6>
                 ==========================
                 </li>
         );
