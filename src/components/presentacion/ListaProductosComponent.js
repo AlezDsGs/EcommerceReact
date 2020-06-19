@@ -1,43 +1,61 @@
 import React from 'react';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, CardImgOverlay
-} from 'reactstrap';
-import { Link } from 'react-router-dom';
+//import {
+//    Card, CardImg, CardText, CardBody,
+//    CardTitle, CardSubtitle, CardImgOverlay
+//} from 'reactstrap';
+import { Link, Route } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
-
 import { baseUrl } from '../../frombackend/baseUrl';
 
-function RenderProductoItem({ producto }) {
-    return (
-        //<Card onClick={() => onClick(producto.id)}>
-        //    <CardImg variant="top" src={producto.image} alt={producto.name} />
-        //    <CardBody>
-        //        <CardTitle>{producto.name}</CardTitle>
-        //        <CardSubtitle>{producto.price}$</CardSubtitle>
-        //        <CardText className="d-none d-md-block">{producto.description}</CardText>
-        //    </CardBody>
-        //</Card>   
-        <Card>
-            <Link to={`/ListaProductos/${producto.id}`} >
-                <CardImg width="100%" src={baseUrl + producto.imagen} alt={producto.nombre} />
-                <CardImgOverlay>
-                    <CardTitle>{producto.nombre}</CardTitle>
-                </CardImgOverlay>
-            </Link>
-        </Card>
-    );
+//========material============
 
-}
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import CardActionArea from '@material-ui/core/CardActionArea';
+
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
+    },
+    gridList: {
+        width: 500,
+        height: 450,
+    },
+    icon: {
+        color: 'rgba(255, 255, 255, 0.54)',
+    },
+}));
 
 
 const ListaDeProductos = (props) => {
+    const classes = useStyles();
 
     const listaDeProductos = props.productos.productos.map((producto, index) => {
         return (
-            <div key={producto.id} className="col-5 col-sm-4 mt-4" >
-                <RenderProductoItem producto={producto} />
-            </div>
+            <GridListTile key={producto.id} component={Link} to={`/ListaProductos/${producto.id}`}>
+
+                    <img src={baseUrl + producto.imagen} alt={producto.nombre} />
+                    <GridListTileBar
+                        title={producto.nombre}
+                        subtitle={<span>Precio: {producto.precio}</span>}
+                        actionIcon={
+                            <IconButton aria-label={`info about ${producto.nombre}`} className={classes.icon}>
+                                <InfoIcon />
+                            </IconButton>
+                        }
+                    />
+            </GridListTile>
         );
     });
 
@@ -64,13 +82,45 @@ const ListaDeProductos = (props) => {
     else
 
         return (
-            <div className="container">
-                <div className="row justify-content-center">
+            <div className={classes.root}>
+                <GridList cellHeight={180}>
+                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                        <ListSubheader component="div">December</ListSubheader>
+                    </GridListTile>
                     {listaDeProductos}
-                </div>
+
+                </GridList>
             </div>
         );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export default ListaDeProductos;

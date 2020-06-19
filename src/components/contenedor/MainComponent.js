@@ -64,7 +64,7 @@ class Main extends Component {
                     productosLoading={this.props.productos.isLoading}
                     productosErrMess={this.props.productos.errMess}
 
-                    promocion={this.props.promociones.promociones.filter((promo) => promo.destacado)[0]}
+                    promocion={this.props.promociones.promociones.filter((promo) => promo.destacado)}
                     promocionLoading={this.props.promociones.isLoading}
                     promocionErrMess={this.props.promociones.errMess}
                 />
