@@ -45,16 +45,16 @@ const ListaDeProductos = (props) => {
         return (
             <GridListTile key={producto.id} component={Link} to={`/ListaProductos/${producto.id}`}>
 
-                    <img src={baseUrlImage + producto.imagen} alt={producto.nombre} />
-                    <GridListTileBar
-                        title={producto.nombre}
-                        subtitle={<span>Precio: {producto.precio}</span>}
-                        actionIcon={
-                            <IconButton aria-label={`info about ${producto.nombre}`} className={classes.icon}>
-                                <InfoIcon />
-                            </IconButton>
-                        }
-                    />
+                <img src={baseUrlImage + producto.imagen} alt={producto.nombre} />
+                <GridListTileBar
+                    title={producto.nombre}
+                    subtitle={<span>Precio: {producto.precio}</span>}
+                    actionIcon={
+                        <IconButton aria-label={`info about ${producto.nombre}`} className={classes.icon}>
+                            <InfoIcon />
+                        </IconButton>
+                    }
+                />
             </GridListTile>
         );
     });
@@ -82,13 +82,12 @@ const ListaDeProductos = (props) => {
     else
 
         return (
-            <div className={classes.root}>
+            <div className={classes.root} className="container">
                 <GridList cellHeight={180}>
                     <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                         <ListSubheader component="div">December</ListSubheader>
                     </GridListTile>
                     {listaDeProductos}
-
                 </GridList>
             </div>
         );
