@@ -14,6 +14,9 @@ class App extends Component {
     //constructor(props) {
     //    super(props);
     //}
+    componentDidMount() {
+        document.title = 'Ader Blanqueria';
+    }
 
     render() {
         const store = ConfigureStore();

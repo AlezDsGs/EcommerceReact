@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../../frombackend/baseUrl';
+import { baseUrl, baseUrlImage } from '../../frombackend/baseUrl';
 import { Typography } from '@material-ui/core';
 import Visa from 'payment-icons/min/flat/visa.svg';
 import masterCard from 'payment-icons/min/flat/mastercard-old.svg';
@@ -48,7 +48,7 @@ function renderProducto(producto) {
         //    }
         //</Carousel>
         <Card>
-            <CardImg top src={baseUrl + producto.imagen} alt={producto.nombre} />
+            <CardImg top src={baseUrlImage + producto.imagen} alt={producto.nombre} />
             <CardBody>
 
                 <CardText>{producto.descipcion}</CardText>

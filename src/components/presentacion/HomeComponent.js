@@ -4,7 +4,7 @@ import {
     CardTitle, CardSubtitle
 } from 'reactstrap';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../../frombackend/baseUrl';
+import { baseUrl, baseUrlImage } from '../../frombackend/baseUrl';
 import Carousel from 'react-material-ui-carousel';
 import { Paper, Button } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -29,7 +29,7 @@ function RenderCard({ item, isLoading, errMess }) {
     } else
         return (
             <Card>
-                <CardImg src={baseUrl + item.imagen} alt={item.nombre} />
+                <CardImg src={baseUrlImage + item.imagen} alt={item.nombre} />
                 <CardBody>
                     <CardTitle>{item.nombre}</CardTitle>
                     {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
@@ -48,7 +48,7 @@ function Item(props) {
                 component="img"
                 alt="Contemplative Reptile"
                 height="200"
-                image={baseUrl + props.item.imagen}
+                image={baseUrlImage + props.item.imagen}
                 title="Contemplative Reptile"
             />
 

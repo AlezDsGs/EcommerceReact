@@ -5,7 +5,7 @@ import React from 'react';
 //} from 'reactstrap';
 import { Link, Route } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../../frombackend/baseUrl';
+import { baseUrl, baseUrlImage } from '../../frombackend/baseUrl';
 
 //========material============
 
@@ -45,7 +45,7 @@ const ListaDeProductos = (props) => {
         return (
             <GridListTile key={producto.id} component={Link} to={`/ListaProductos/${producto.id}`}>
 
-                    <img src={baseUrl + producto.imagen} alt={producto.nombre} />
+                    <img src={baseUrlImage + producto.imagen} alt={producto.nombre} />
                     <GridListTileBar
                         title={producto.nombre}
                         subtitle={<span>Precio: {producto.precio}</span>}
