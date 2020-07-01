@@ -24,3 +24,4 @@ yarn-error.log*
 .vs/
 /yarn.lock
 .env
+/public/imagenesEnCloudinaryStorage

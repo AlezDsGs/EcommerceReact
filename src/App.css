@@ -39,6 +39,10 @@
 }
 
 
+.home {
+    overflow: hidden;
+}
+
 /* ================INICIO Header y Footer css ======================*/
 .row-header {
     margin: 0px auto;

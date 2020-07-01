@@ -87,7 +87,7 @@ function Home(props) {
                 }
             </Carousel>
 
-            <div className="row align-items-start">
+            <div className="row align-items-start home">
                 <div className="col-12 col-md m-1">
                     <RenderCard item={props.producto} isLoading={props.productosLoading} errMess={props.productosErrMess} />
                 </div>
