@@ -1,10 +1,12 @@
 import React from 'react';
+import { Spin, Space } from 'antd';
+import { red } from '@material-ui/core/colors';
+
 
 export const Loading = () => {
-    return(
-        <div className="col-12">
-            <span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>
-            <p>Loading . . .</p>
+    return (
+        <div className="col-12" style={{ paddingTop: '20%' }}>
+            <Spin size="large" />
         </div>
     );
 };

@@ -29,7 +29,7 @@ function RenderCard({ item, isLoading, errMess }) {
     } else
         return (
             <Card>
-                <CardImg src={baseUrlImage + item.imagen} alt={item.nombre} />
+                <CardImg src={baseUrlImage + item.fotos[0].urlFoto} alt={item.nombre} />
                 <CardBody>
                     <CardTitle>{item.nombre}</CardTitle>
                     {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}

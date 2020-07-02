@@ -43,6 +43,11 @@
     overflow: hidden;
 }
 
+.texto-link {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 /* ================INICIO Header y Footer css ======================*/
 .row-header {
     margin: 0px auto;

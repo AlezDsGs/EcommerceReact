@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -41,7 +41,7 @@ function Header /*extends Component*/(props) {
 
     //render() {
 
-    let classes = useStyles();
+    const classes = useStyles();
 
     return (
         //<div>
@@ -70,9 +70,14 @@ function Header /*extends Component*/(props) {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
+
+                    <Link className="texto-link" to='/home'> <Button color="inherit">Inicio</Button></Link>
+                    <Link className="texto-link" to='/listaproductos'> <Button color="inherit">Productos</Button></Link>
+
                     <Typography variant="h6" className={classes.title}>
-                        <NavbarBrand className="mr-auto" href="/"><img src="logo.png" height="30" width="41" alt='Ristorante Con Fusion' /></NavbarBrand>
+                        <NavbarBrand className="mr-auto" href="/"><img src={window.location.origin + "/logo.png"} height="30" width="41" alt='logoAder' /></NavbarBrand>
                     </Typography>
+
                     <Button color="inherit">Carrito</Button>
                 </Toolbar>
             </AppBar>

@@ -7,6 +7,12 @@ import Visa from 'payment-icons/min/flat/visa.svg';
 import masterCard from 'payment-icons/min/flat/mastercard-old.svg';
 import Amex from 'payment-icons/min/flat/amex.svg';
 import { makeStyles } from '@material-ui/core/styles';
+//import Carousel from 'react-material-ui-carousel';
+import { Paper, Button } from '@material-ui/core';
+import CardMedia from '@material-ui/core/CardMedia';
+
+import { Carousel } from 'antd';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,34 +34,34 @@ const useStyles = makeStyles((theme) => ({
     },
     tituloProducto: {
         color: "midnightblue",
-        marginTop:20
+        marginTop: 20
     }
 }));
-function renderProducto(producto) {
+
+
+function Item(props) {
     return (
 
-        //<Carousel>
-        //    {
-        //        props.promocion.map(item => {
-        //            <CardMedia
-        //                component="img"
-        //                alt="Contemplative Reptile"
-        //                height="200"
-        //                image={baseUrl + props.item.imagen}
-        //                title="Contemplative Reptile"
-        //            />
-        //        })
-        //    }
-        //</Carousel>
-        <Card>
-            <CardImg top src={baseUrlImage + producto.imagen} alt={producto.nombre} />
-            <CardBody>
 
-                <CardText>{producto.descipcion}</CardText>
-            </CardBody>
-        </Card>
-    );
+        <CardMedia
+            component="img"
+            alt={props.item.urlFoto}
+            height="400"
+            image={window.location.origin + "/" + baseUrlImage + props.item.urlFoto}
+            title="Contemplative Reptile"
+        />
+        //<Paper>
+        //    <h2>{props.item.urlFoto}</h2>
+        //    <p>{props.item.urlFoto}</p>
+
+        //    <Button className="CheckButton">
+        //        Check it out!
+        //</Button>
+        //</Paper>
+
+    )
 }
+
 
 function renderComentarios(comentarios) {
     const listaDeComentarios = comentarios.map((comentario) => {
@@ -109,7 +115,24 @@ const DetalleProducto = (props) => {
             <div /*className="container"*/>
                 <div className="row">
                     <div className="col-12 col-md-5 m-1">
-                        {renderProducto(props.producto)}
+                        <Carousel autoplay effect="fade" dotPosition='left'>
+                            {
+                                props.producto.fotos.map(item =>
+                                    <CardMedia key={item.id}
+                                        component="img"
+                                        alt={item.urlFoto}
+                                        height="400"
+                                        image={window.location.origin + "/" + baseUrlImage + item.urlFoto}
+                                        title={props.producto.nombre}
+                                    />
+                                )
+                            }
+                        </Carousel>
+                        {/*<Carousel>
+                            {
+                                props.producto.fotos.map(item => <Item key={item.id} item={item} />)
+                            }
+                        </Carousel>*/}
                     </div>
                     <div className="col-12 col-md-5 m-1" >
 

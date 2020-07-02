@@ -45,7 +45,7 @@ const ListaDeProductos = (props) => {
         return (
             <GridListTile key={producto.id} component={Link} to={`/ListaProductos/${producto.id}`}>
 
-                <img src={baseUrlImage + producto.imagen} alt={producto.nombre} />
+                <img src={baseUrlImage + producto.fotos[0].urlFoto} alt={producto.nombre} />
                 <GridListTileBar
                     title={producto.nombre}
                     subtitle={<span>Precio: {producto.precio}</span>}
