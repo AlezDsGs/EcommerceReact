@@ -5,9 +5,9 @@ import {
 } from 'reactstrap';
 import { Loading } from './LoadingComponent';
 import { baseUrl, baseUrlImage } from '../../frombackend/baseUrl';
-import Carousel from 'react-material-ui-carousel';
-import { Paper, Button } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
+import { Link, Route } from 'react-router-dom';
+import { Carousel } from 'antd';
 
 
 
@@ -33,68 +33,45 @@ function RenderCard({ item, isLoading, errMess }) {
                 <CardBody>
                     <CardTitle>{item.nombre}</CardTitle>
                     {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
-                    <CardText>{item.descripcion}</CardText>
+                    <CardText className="d-none d-md-block">{item.descripcion}</CardText>
                 </CardBody>
             </Card>
         );
 
 }
-function Item(props) {
-    return (
 
-        <div >
-
-            <CardMedia
-                component="img"
-                alt="Contemplative Reptile"
-                height="200"
-                image={baseUrlImage + props.item.imagen}
-                title="Contemplative Reptile"
-            />
-
-            {/*<h2>{props.item.name}</h2>
-            <p>{props.item.description}</p>
-
-            <Button className="CheckButton">
-                Check it out!
-            </Button>
-            */}
-        </div>
-    )
-}
 
 function Home(props) {
-    var items = [
-        {
-            id: 1,
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!",
-            imagen: "images/uthappizza.png"
 
-        },
-        {
-            id: 3,
-            name: "Random Name #2",
-            description: "Hello World!",
-            imagen: "images/uthappizza.png"
-        }
-    ]
     return (
-        <div className="container">
-            <Carousel>
+        <div className="container px-0 mx-0" style={{ maxWidth: '100%' }}>
+            <Carousel autoplay effect="fade" dotPosition='bottom'>
                 {
-                    props.promocion.map(item => <Item key={item.id} item={item} />)
+                    props.producto.map(prod =>
+                        <CardMedia key={prod.id}
+                            component="img"
+                            alt={prod.nombre}
+                            height="200"
+                            image={baseUrlImage + prod.fotos[0].urlFoto}
+                            title={prod.nombre}
+                        />
+                    )
                 }
             </Carousel>
 
-            <div className="row align-items-start home">
-                <div className="col-12 col-md m-1">
-                    <RenderCard item={props.producto} isLoading={props.productosLoading} errMess={props.productosErrMess} />
+            <Link to="/listaProductos">
+                <div className="row justify-content-center mx-0" style={{ maxWidth: '100%' }} >
+                    <div className="col-5 px-2 mt-2">
+                        <RenderCard item={props.producto[0]} isLoading={props.productosLoading} errMess={props.productosErrMess} />
+                    </div>
+                    <div className="col-5 px-2 mt-2">
+                        <RenderCard item={props.producto[1]} isLoading={props.productosLoading} errMess={props.productosErrMess} />
+                        {/*
+                        <RenderCard item={props.promocion[0]} isLoading={props.promocionLoading} errMess={props.promocionErrMess} />
+                    */}
+                    </div>
                 </div>
-                <div className="col-12 col-md m-1">
-                    <RenderCard item={props.promocion[0]} isLoading={props.promocionLoading} errMess={props.promocionErrMess} />
-                </div>
-            </div>
+            </Link>
         </div>
     );
 }

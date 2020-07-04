@@ -1,18 +1,16 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import { Loading } from './LoadingComponent';
-import { baseUrl, baseUrlImage } from '../../frombackend/baseUrl';
+import { baseUrlImage } from '../../frombackend/baseUrl';
 import { Typography } from '@material-ui/core';
 import Visa from 'payment-icons/min/flat/visa.svg';
 import masterCard from 'payment-icons/min/flat/mastercard-old.svg';
 import Amex from 'payment-icons/min/flat/amex.svg';
 import { makeStyles } from '@material-ui/core/styles';
 //import Carousel from 'react-material-ui-carousel';
-import { Paper, Button } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
-
-import { Carousel } from 'antd';
-
+import { Carousel, Button } from 'antd';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     iconos: {
         width: "auto",
-        height: 50,
+        height: 20,
         backgroundPosition: "left - 397",
         margin: 5
     },
@@ -37,30 +35,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20
     }
 }));
-
-
-function Item(props) {
-    return (
-
-
-        <CardMedia
-            component="img"
-            alt={props.item.urlFoto}
-            height="400"
-            image={window.location.origin + "/" + baseUrlImage + props.item.urlFoto}
-            title="Contemplative Reptile"
-        />
-        //<Paper>
-        //    <h2>{props.item.urlFoto}</h2>
-        //    <p>{props.item.urlFoto}</p>
-
-        //    <Button className="CheckButton">
-        //        Check it out!
-        //</Button>
-        //</Paper>
-
-    )
-}
 
 
 function renderComentarios(comentarios) {
@@ -92,9 +66,14 @@ function renderComentarios(comentarios) {
 
 const DetalleProducto = (props) => {
     const classes = useStyles();
+
+
+    const asd = (prod) => props.agregarProductoCarrito(prod);
+
+
     if (props.isLoading) {
         return (
-            <div /*className="container"*/>
+            <div>
                 <div className="row">
                     <Loading />
                 </div>
@@ -103,7 +82,7 @@ const DetalleProducto = (props) => {
     }
     else if (props.errMess) {
         return (
-            <div /*className="container"*/>
+            <div>
                 <div className="row">
                     <h4>{props.errMess}</h4>
                 </div>
@@ -112,29 +91,25 @@ const DetalleProducto = (props) => {
     } else if (props.producto != null)
         return (
 
-            <div /*className="container"*/>
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
+            <div className="container m-0">
+                <div className="row mx-md-n5">
+                    <div className=" col-12 col-md-5 m-0 p-0">
                         <Carousel autoplay effect="fade" dotPosition='left'>
                             {
+
                                 props.producto.fotos.map(item =>
                                     <CardMedia key={item.id}
                                         component="img"
                                         alt={item.urlFoto}
                                         height="400"
-                                        image={window.location.origin + "/" + baseUrlImage + item.urlFoto}
+                                        image={baseUrlImage + item.urlFoto}
                                         title={props.producto.nombre}
                                     />
                                 )
                             }
                         </Carousel>
-                        {/*<Carousel>
-                            {
-                                props.producto.fotos.map(item => <Item key={item.id} item={item} />)
-                            }
-                        </Carousel>*/}
                     </div>
-                    <div className="col-12 col-md-5 m-1" >
+                    <div className=" col-12 col-md-5  m-0 px-5" >
 
 
                         <Typography variant="h4" component="h4" className={classes.tituloProducto}>
@@ -148,18 +123,20 @@ const DetalleProducto = (props) => {
                                 {props.producto.descripcion}
                             </Typography >
                         </div>
+                        <Button type="primary" onClick={() => asd(props.producto)}>Agregar al carrito</Button>
                         <div className="row" className={classes.listaDePago}>
                             < img src={Visa} alt="Reaccionar logotipo" className={classes.iconos} />
                             < img src={Amex} alt="Reaccionar logotipo" className={classes.iconos} />
                             < img src={masterCard} alt="Reaccionar logotipo" className={classes.iconos} />
                         </div>
                     </div>
-                </div>
 
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        {/*{renderComentarios(props.comentarios)}
+
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-0 p-0">
+                            {/*{renderComentarios(props.comentarios)}
                          */}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,6 +147,10 @@ const DetalleProducto = (props) => {
         return (
             <div></div>
         );
+
+
+
+
 }
 
 

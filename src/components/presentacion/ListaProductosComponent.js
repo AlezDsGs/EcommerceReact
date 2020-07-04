@@ -85,7 +85,7 @@ const ListaDeProductos = (props) => {
             <div className={classes.root} className="container">
                 <GridList cellHeight={180}>
                     <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                        <ListSubheader component="div">December</ListSubheader>
+                        <ListSubheader component="div">Lista de Precios</ListSubheader>
                     </GridListTile>
                     {listaDeProductos}
                 </GridList>

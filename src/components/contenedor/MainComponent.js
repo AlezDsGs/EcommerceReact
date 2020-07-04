@@ -7,20 +7,23 @@ import Home from '../presentacion/HomeComponent';
 
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { /*addComment,*/ fetchProductos, fetchComentarios, fetchPromociones } from '../../redux/ActionCreators';
+import { /*addComment,*/ fetchProductos, fetchComentarios, fetchPromociones, agregarProductoCarrito, eliminarProductoCarrito } from '../../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
         productos: state.productos,
         comentarios: state.comentarios,
-        promociones: state.promociones
+        promociones: state.promociones,
+        productosEnCarrito: state.carrito.productos
     }
 }
 
 const mapDispathToProps = (dispatch) => ({
     fetchProductos: () => { dispatch(fetchProductos()) },
     fetchComentarios: () => dispatch(fetchComentarios()),
-    fetchPromociones: () => dispatch(fetchPromociones())
+    fetchPromociones: () => dispatch(fetchPromociones()),
+    agregarProductoCarrito: (producto) => dispatch(agregarProductoCarrito(producto)),
+    borrarProductoCarrito: (id) => dispatch(eliminarProductoCarrito(id))
     //addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
     //resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
 });
@@ -43,12 +46,13 @@ class Main extends Component {
 
         const ProductoWithId = ({ match }) => {
 
-            console.log(this.props);
             return (
                 <DetalleProducto
                     producto={this.props.productos.productos.filter((prod) => prod.id === parseInt(match.params.prodId, 10))[0]}
                     isLoading={this.props.productos.isLoading}
                     errMess={this.props.productos.errMess}
+
+                    agregarProductoCarrito={this.props.agregarProductoCarrito}
 
                     comentarios={this.props.comentarios.comentarios.filter((comment) => comment.productoId === parseInt(match.params.prodId, 10))}
                     comentariosErrMess={this.props.comentarios.errMess}
@@ -60,7 +64,7 @@ class Main extends Component {
         const HomePage = () => {
             return (
                 <Home
-                    producto={this.props.productos.productos.filter((prod) => !prod.destacado)[0]}
+                    producto={this.props.productos.productos.filter((prod) => prod.destacado)}
                     productosLoading={this.props.productos.isLoading}
                     productosErrMess={this.props.productos.errMess}
 
@@ -75,7 +79,7 @@ class Main extends Component {
 
 
             <div>
-                <Header />
+                <Header productosEnCarrito={this.props.productosEnCarrito} borrarProductoCarrito={this.props.borrarProductoCarrito}/>
                 <Switch>
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/listaproductos' component={() => <ListaProductos productos={this.props.productos} />} />

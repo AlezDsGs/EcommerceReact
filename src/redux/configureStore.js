@@ -4,13 +4,15 @@ import logger from 'redux-logger';
 import { Productos } from './productos';
 import { Comentarios } from './comentarios';
 import { Promociones } from './promociones';
+import { Carrito } from './carrito';
 
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
             productos: Productos,
             comentarios: Comentarios,
-            promociones: Promociones
+            promociones: Promociones,
+            carrito: Carrito
         }),
         applyMiddleware(thunk, logger)
     );

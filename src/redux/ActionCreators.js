@@ -114,3 +114,26 @@ export const promocionesFailed = (errmess) => ({
     payload: errmess
 });
 
+
+
+//===========================
+
+
+
+
+export const agregarProductoCarrito = (producto) => ({
+
+    type: ActionTypes.ADD_PRODUCTO,
+    payload: producto
+});
+
+export const eliminarProductoCarrito = (id) => ({
+    type: ActionTypes.DELETE_PRODUCTO,
+    payload: id
+});
+
+export const listaProductosCarrito = (promos) => ({
+    type: ActionTypes.ADD_PROMOCIONES,
+    payload: promos
+});
+
