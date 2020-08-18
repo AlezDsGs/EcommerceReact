@@ -13,14 +13,11 @@ export const Carrito = (state = {
 
         case ActionTypes.DELETE_PRODUCTO:
 
-            console.log(action.payload);
             let productoId = action.payload;
 
             var resultado = state.productos.filter(x => {
                 return x.id != productoId;
-            })
-
-            console.log(resultado);
+            });
 
             return { ...state, productos: resultado }
 

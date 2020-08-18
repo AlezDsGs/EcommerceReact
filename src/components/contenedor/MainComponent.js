@@ -4,41 +4,46 @@ import DetalleProducto from '../presentacion/DetalleProductoComponent';
 import Header from './HeaderComponent';
 import Footer from '../presentacion/FooterComponent';
 import Home from '../presentacion/HomeComponent';
-
+import { Affix, Button } from 'antd';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { /*addComment,*/ fetchProductos, fetchComentarios, fetchPromociones, agregarProductoCarrito, eliminarProductoCarrito } from '../../redux/ActionCreators';
+import {
+    fetchProductoUnico, fetchProductos, fetchComentarios, hacerBusqueda,
+    fetchPromociones, agregarProductoCarrito, eliminarProductoCarrito, generarTicketCompra, visibilidadPopUp,
+} from '../../redux/ActionCreators';
+
+
 
 const mapStateToProps = state => {
     return {
         productos: state.productos,
         comentarios: state.comentarios,
         promociones: state.promociones,
-        productosEnCarrito: state.carrito.productos
+        productosEnCarrito: state.carrito.productos,
+        productoUnico: state.productoUnico,
+        visibilidadPopUp: state.visibilidadPopUp
     }
 }
 
 const mapDispathToProps = (dispatch) => ({
-    fetchProductos: () => { dispatch(fetchProductos()) },
+    fetchProductos: (palabrasBuscadas, pagina) => dispatch(fetchProductos(palabrasBuscadas, pagina)),
     fetchComentarios: () => dispatch(fetchComentarios()),
     fetchPromociones: () => dispatch(fetchPromociones()),
     agregarProductoCarrito: (producto) => dispatch(agregarProductoCarrito(producto)),
-    borrarProductoCarrito: (id) => dispatch(eliminarProductoCarrito(id))
-    //addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-    //resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
+    borrarProductoCarrito: (id) => dispatch(eliminarProductoCarrito(id)),
+    generarTicketCompra: (listaProductos, detallesDeEnvio) => dispatch(generarTicketCompra(listaProductos, detallesDeEnvio)),
+    fetchProductoPorId: (id) => dispatch(fetchProductoUnico(id)),
+    ocultarPopUp: () => dispatch(visibilidadPopUp(false, "ningun mensaje"))
 });
 
 class Main extends Component {
 
     constructor(props) {
         super(props);
-
     }
 
 
     componentDidMount() {
-        this.props.fetchProductos();
-        this.props.fetchComentarios();
         this.props.fetchPromociones();
     }
 
@@ -48,15 +53,11 @@ class Main extends Component {
 
             return (
                 <DetalleProducto
-                    producto={this.props.productos.productos.filter((prod) => prod.id === parseInt(match.params.prodId, 10))[0]}
-                    isLoading={this.props.productos.isLoading}
-                    errMess={this.props.productos.errMess}
-
+                    fetchProductoPorId={this.props.fetchProductoPorId}
+                    isLoading={this.props.productoUnico.isLoading}
+                    errMess={this.props.productoUnico.errMess}
+                    productoId={match.params.prodId}
                     agregarProductoCarrito={this.props.agregarProductoCarrito}
-
-                    comentarios={this.props.comentarios.comentarios.filter((comment) => comment.productoId === parseInt(match.params.prodId, 10))}
-                    comentariosErrMess={this.props.comentarios.errMess}
-                //addComment={this.props.addComment}
                 />
             );
         };
@@ -64,10 +65,6 @@ class Main extends Component {
         const HomePage = () => {
             return (
                 <Home
-                    producto={this.props.productos.productos.filter((prod) => prod.destacado)}
-                    productosLoading={this.props.productos.isLoading}
-                    productosErrMess={this.props.productos.errMess}
-
                     promocion={this.props.promociones.promociones.filter((promo) => promo.destacado)}
                     promocionLoading={this.props.promociones.isLoading}
                     promocionErrMess={this.props.promociones.errMess}
@@ -78,13 +75,28 @@ class Main extends Component {
         return (
 
 
-            <div>
-                <Header productosEnCarrito={this.props.productosEnCarrito} borrarProductoCarrito={this.props.borrarProductoCarrito}/>
+            <div style={{ backgroundColor: '#edf4ff' }}>
+
+                <Header
+                    productosEnCarrito={this.props.productosEnCarrito}
+                    borrarProductoCarrito={this.props.borrarProductoCarrito}
+                    generarTicketCompra={this.props.generarTicketCompra}
+                    visibilidadPopUp={this.props.visibilidadPopUp}
+                    ocultarPopUp={this.props.ocultarPopUp}
+                />
+
+
+
                 <Switch>
-                    <Route path='/home' component={HomePage} />
-                    <Route exact path='/listaproductos' component={() => <ListaProductos productos={this.props.productos} />} />
-                    <Route path='/listaproductos/:prodId' component={ProductoWithId} />
-                    <Redirect to="/home" />
+                    <Route path='//' component={HomePage} />
+
+                    <Route path='/:prodNom/p/:prodId' render={(props) => <DetalleProducto
+                        fetchProductoPorId={this.props.fetchProductoPorId}
+                        productoUnico={this.props.productoUnico}
+                        agregarProductoCarrito={this.props.agregarProductoCarrito}
+                        {...props} />} />
+                    <Route path='/:busqueda' render={(props) => <ListaProductos productos={this.props.productos} cambiarPagina={this.props.fetchProductos} {...props} />} />
+                    <Redirect to="//" />
                 </Switch>
                 <Footer />
             </div>

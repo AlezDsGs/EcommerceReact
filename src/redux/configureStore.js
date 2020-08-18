@@ -5,6 +5,8 @@ import { Productos } from './productos';
 import { Comentarios } from './comentarios';
 import { Promociones } from './promociones';
 import { Carrito } from './carrito';
+import { ProductoUnico } from './producto';
+import { VisibilidadPopUp } from './popUpEstado';
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -12,7 +14,9 @@ export const ConfigureStore = () => {
             productos: Productos,
             comentarios: Comentarios,
             promociones: Promociones,
-            carrito: Carrito
+            carrito: Carrito,
+            productoUnico: ProductoUnico,
+            visibilidadPopUp: VisibilidadPopUp
         }),
         applyMiddleware(thunk, logger)
     );

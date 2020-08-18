@@ -1,8 +1,8 @@
-import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import React, { useEffect } from 'react';
+//import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import { Loading } from './LoadingComponent';
 import { baseUrlImage } from '../../frombackend/baseUrl';
-import { Typography } from '@material-ui/core';
+//import { Typography } from '@material-ui/core';
 import Visa from 'payment-icons/min/flat/visa.svg';
 import masterCard from 'payment-icons/min/flat/mastercard-old.svg';
 import Amex from 'payment-icons/min/flat/amex.svg';
@@ -10,143 +10,190 @@ import { makeStyles } from '@material-ui/core/styles';
 //import Carousel from 'react-material-ui-carousel';
 import { Paper } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
-import { Carousel, Button } from 'antd';
+import { Carousel, Button, Affix, Row, Col, Card, Typography, Space } from 'antd';
+import { RocketOutlined, ShopOutlined, LockOutlined, BankOutlined, CreditCardOutlined, SafetyOutlined } from '@ant-design/icons';
+import zIndex from '@material-ui/core/styles/zIndex';
+
+const { Text, Link, Title } = Typography;
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    listaDePago: {
-        display: "inline -block",
-        verticalAlign: "middle",
-        margin: 4
-    },
     iconos: {
         width: "auto",
         height: 20,
         backgroundPosition: "left - 397",
         margin: 5
     },
-    detalles: {
-        marginBottom: 50,
+    dotsCarrouselApilacion: {
+        zIndex: 0
     },
-    tituloProducto: {
-        color: "midnightblue",
-        marginTop: 20
-    }
+
 }));
 
 
-function renderComentarios(comentarios) {
-    const listaDeComentarios = comentarios.map((comentario) => {
+//function renderComentarios(comentarios) {
+//    const listaDeComentarios = comentarios.map((comentario) => {
 
-        comentario.date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comentario.fecha)));
-        return (
-            <li key={comentario.id}>
+//        comentario.date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comentario.fecha)));
+//        return (
+//            <li key={comentario.id}>
 
-                <h6> {comentario.textoComentario} </h6>
-                <h6>{comentario.autor}</h6>
-                <h6>{comentario.puntaje}</h6>
-                <h6>{comentario.fecha}</h6>
-                ==========================
-                </li>
-        );
-    });
+//                <h6> {comentario.textoComentario} </h6>
+//                <h6>{comentario.autor}</h6>
+//                <h6>{comentario.puntaje}</h6>
+//                <h6>{comentario.fecha}</h6>
+//                ==========================
+//                </li>
+//        );
+//    });
 
-    return (
-        <div>
-            <h4>Comentarios</h4>
-            <ul className="list-unstyled">
-                {listaDeComentarios}
-            </ul>
-        </div>
-    );
+//    return (
+//        <div>
+//            <h4>Comentarios</h4>
+//            <ul className="list-unstyled">
+//                {listaDeComentarios}
+//            </ul>
+//        </div>
+//    );
 
-}
+//}
 
 const DetalleProducto = (props) => {
+
+    useEffect(function () {
+        console.log("DETALLE PRODUCTOOOOOOOOOOOO");
+        props.fetchProductoPorId(props.match.params.prodId);
+
+    }, [props.location]);
+
+
     const classes = useStyles();
-
-
     const asd = (prod) => props.agregarProductoCarrito(prod);
 
 
-    if (props.isLoading) {
+    if (props.productoUnico.isLoading) {
         return (
-            <div>
+            <div className="container">
                 <div className="row">
                     <Loading />
                 </div>
             </div>
         );
     }
-    else if (props.errMess) {
+    else if (props.productoUnico.errMess) {
         return (
-            <div>
+            <div className="container">
                 <div className="row">
                     <h4>{props.errMess}</h4>
                 </div>
             </div>
         );
-    } else if (props.producto != null)
+    } else if (props.productoUnico.productoUnico != null)
         return (
 
-            <div className="container m-0">
-                <div className="row mx-md-n5">
-                    <div className=" col-12 col-md-5 m-0 p-0">
-                        <Carousel autoplay effect="fade" dotPosition='left'>
+            <div style={{ minHeight: '100vh' }}>
+                <Row className="m-0 p-0" gutter={[0, 0]} justify="center">
+                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                        <Carousel autoplay effect="fade" dotPosition='bottom' dots={classes.dotsCarrouselApilacion}>
                             {
 
-                                props.producto.fotos.map(item =>
+                                props.productoUnico.productoUnico.fotos.map(item =>
                                     <CardMedia key={item.id}
                                         component="img"
                                         alt={item.urlFoto}
                                         height="400"
                                         image={baseUrlImage + item.urlFoto}
-                                        title={props.producto.nombre}
+                                        title={props.productoUnico.nombre}
                                     />
                                 )
                             }
                         </Carousel>
+                    </Col>
+                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
+
+
+                        <Card style={{ height: "100%" }}>
+                            <Title level={3} className="mt-2 mx-3">
+                                {props.productoUnico.productoUnico.nombre}
+                            </Title>
+                            <Title level={2} className="mt-0 mx-3">
+                                $ {props.productoUnico.productoUnico.precio.toFixed(2)}
+                            </Title >
+                            <div className="row" className=" mx-3 mb-3">
+                                <Text style={{ fontSize: 18 }}>
+                                    {props.productoUnico.productoUnico.descripcion}
+                                </Text >
+                            </div>
+
+                        </Card>
+
+                    </Col>
+
+
+
+
+                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                        <Card style={{ height: "100%" }}> { /*falta poner "shadow" al div*/}
+                            <Affix offsetBottom={8}>
+                                <Row justify="center" style={{ /*backgroundColor: 'red'*/ }}>
+                                    <Button onClick={() => asd(props.productoUnico.productoUnico)} type="primary" style={{ width: '80%' }}>Agregar al carrito</Button>
+                                </Row>
+                            </Affix>
+                            <div style={{ textAlign: '-webkit-center' }}>
+
+                                <Row style={{ width: '70%' }}>
+                                    <BankOutlined style={{ alignSelf: 'center', width: '10%' }} /> transferencia bancaria
+                                </Row>
+                                <Row style={{ width: '70%' }}>
+                                    <CreditCardOutlined style={{ alignSelf: 'center', width: '10%' }} />Pagos con Tarjeta
+                                </Row>
+                                < img src={Visa} alt="Reaccionar logotipo" className={classes.iconos} />
+                                < img src={Amex} alt="Reaccionar logotipo" className={classes.iconos} />
+                                < img src={masterCard} alt="Reaccionar logotipo" className={classes.iconos} />
+                            </div>
+                            <div style={{ textAlign: '-webkit-center' }}>
+                                <Row style={{ width: '70%', fontSize: 'large', fontWeight: 'bold', justifyContent: 'center' }}>
+                                    <p>Stock Disponible</p>
+                                </Row>
+                                <Row style={{ width: '70%', color: 'green' }}>
+                                    <RocketOutlined style={{ alignSelf: 'center', width: '10%' }} /> Envio a Todo el Pais
+                                </Row>
+                                <Row style={{ width: '70%' }}>
+                                    <ShopOutlined style={{ alignSelf: 'center', width: '10%' }} /> Tienda Oficial
+                                </Row>
+                                <Row style={{ width: '70%', color: 'green' }}>
+                                    <SafetyOutlined style={{ alignSelf: 'center', width: '10%' }} /> Compras Seguras
+                                </Row>
+                            </div>
+                        </Card>
+
+                    </Col>
+                </Row>
+
+                {/*
+                <div className="row">
+                    <div className="col-12 col-md-5 m-0 p-0">
+                        {renderComentarios(props.comentarios)}
+                         
                     </div>
-                    <div className=" col-12 col-md-5  m-0 px-5" >
+                </div>
+                */}
+            </div >
 
 
-                        <Typography variant="h4" component="h4" className={classes.tituloProducto}>
-                            {props.producto.nombre}
-                        </Typography >
-                        <Typography variant="h4" component="h4" className={classes.detalles}>
-                            {props.producto.precio}
-                        </Typography >
-                        <div className="row" className={classes.detalles}>
-                            <Typography variant="h5" component="h1">
-                                {props.producto.descripcion}
-                            </Typography >
-                        </div>
-                        <Button type="primary" onClick={() => asd(props.producto)}>Agregar al carrito</Button>
-                        <div className="row" className={classes.listaDePago}>
-                            < img src={Visa} alt="Reaccionar logotipo" className={classes.iconos} />
-                            < img src={Amex} alt="Reaccionar logotipo" className={classes.iconos} />
-                            < img src={masterCard} alt="Reaccionar logotipo" className={classes.iconos} />
-                        </div>
-                    </div>
-
-
-                    <div className="row">
-                        <div className="col-12 col-md-5 m-0 p-0">
-                            {/*{renderComentarios(props.comentarios)}
-                         */}
-                        </div>
+        );
+    else if (document.readyState === 'ready' || document.readyState === 'complete') {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-12" style={{ marginTop: "20%" }}>
+                        <h4>NO SE ENCONTRARON PRODUCTOS PARA LA BUSQUEDA!</h4>
                     </div>
                 </div>
             </div>
-
-
         );
-    else
-        return (
-            <div></div>
-        );
+    } else {
+        return (<div className="container"></div>);
+    }
 
 
 
