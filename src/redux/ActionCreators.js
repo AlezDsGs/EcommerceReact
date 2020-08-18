@@ -162,7 +162,9 @@ export const generarTicketCompra = (prodsEnCarrito, detalleEnvio) => (dispatch) 
         }
     }).then(response => {
         if (response.ok) {
-            console.log("body recibido :" + response.json);
+            console.log(response.json);
+            console.log(response);
+            console.log(response.body);
             return response;
         } else {
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
